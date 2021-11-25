@@ -2,6 +2,7 @@ package com.sapana.jdbc.service.impl;
 
 import com.sapana.jdbc.builder.ResponseBuilder;
 import com.sapana.jdbc.dao.StudentDao;
+import com.sapana.jdbc.dao.impl.StudentDaoDatabaseImpl;
 import com.sapana.jdbc.dao.impl.StudentDaoMemoryImpl;
 import com.sapana.jdbc.model.Student;
 import com.sapana.jdbc.response.Response;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class StudentServiceImpl implements StudentService {
 
-    private  StudentDao studentDAO = new StudentDaoMemoryImpl();
+    private  StudentDao studentDAO = new StudentDaoDatabaseImpl();
 
     @Override
     public Response add(Student student) {
@@ -54,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
         Response response =null;
         try{
              List<Student> students =studentDAO.getAll();
-            response=ResponseBuilder.success("Student fetched successfully",studentDAO.getAll());
+            response=ResponseBuilder.success("Student fetched successfully",students);
         } catch (Exception ex){
             response=ResponseBuilder.failure(ex.getMessage());
         }
@@ -66,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
         Response response =null;
         try{
             Student student =studentDAO.getById(id);
-            response=ResponseBuilder.success("Student fetched successfully",studentDAO.getAll());
+            response=ResponseBuilder.success("Student fetched successfully",student);
         } catch (Exception ex){
             response=ResponseBuilder.failure(ex.getMessage());
         }
